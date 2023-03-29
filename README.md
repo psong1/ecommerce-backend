@@ -28,7 +28,10 @@ Users will need to log 'npm run seed' in the terminal to seed all of the tables 
 
 ## Video Link
 
-![mov](https://youtu.be/vpgzyGs3o8s)
+https://youtu.be/vpgzyGs3o8s
 
 ## Contact
 
+* Github: [psong1](https://github.com/psong1)
+
+* Email me: paulsong29@gmail.com
