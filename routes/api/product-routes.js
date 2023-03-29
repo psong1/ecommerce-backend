@@ -28,6 +28,31 @@ router.get('/', (req, res) => {
 });
 
 // get one product
+router.get('/', (req, res) => {
+  // find all products
+  // be sure to include its associated Category and Tag data
+  Product.findAll({
+    include: [
+      {
+        model: Category
+      },
+      {
+        model: Tag,
+        attributes: ['tag_name'],
+        through: ProductTag,
+        as: 'productTag_tag'
+      }
+    ]
+  })
+  .then(productData => res.json(productData))
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+  });
+
+});
+
+// get one product
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
@@ -49,7 +74,7 @@ router.get('/:id', (req, res) => {
   })
   .then(productData => {
     if (!productData) {
-      res.status(404).json({ message: `Product not found with this id.`});
+      res.status(404).json({ message: 'No product found with this id' });
       return;
     }
     res.json(productData);
@@ -57,11 +82,14 @@ router.get('/:id', (req, res) => {
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
-  })
+  });
+
+
 });
 
 // create new product
 router.post('/', (req, res) => {
+  
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -70,6 +98,7 @@ router.post('/', (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
+ 
   Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
@@ -143,7 +172,7 @@ router.delete('/:id', (req, res) => {
   })
   .then(productData => {
     if (!productData) {
-      res.status(404).json({ message: `Product not found with this id.`});
+      res.status(404).json({ message: 'No Product found with this id' });
       return;
     }
     res.json(productData);
@@ -151,7 +180,7 @@ router.delete('/:id', (req, res) => {
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
-  })
+  });
 });
 
 module.exports = router;

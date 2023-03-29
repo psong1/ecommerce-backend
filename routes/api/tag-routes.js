@@ -4,8 +4,7 @@ const { Tag, Product, ProductTag } = require('../../models');
 // The `/api/tags` endpoint
 
 router.get('/', (req, res) => {
-  // find all tags
-  // be sure to include its associated Product data
+  // find all tags with associated Product data
   Tag.findAll({
     include: [
       {
@@ -19,12 +18,11 @@ router.get('/', (req, res) => {
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
-  })
+  });
 });
 
 router.get('/:id', (req, res) => {
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
+  // find a single tag by its `id` with associated Product data
   Tag.findOne({
     where: {
       id: req.params.id
@@ -33,13 +31,13 @@ router.get('/:id', (req, res) => {
       {
         model: Product,
         through: ProductTag,
-        as: 'productTag_product',
+        as: 'productTag_product'
       }
     ]
   })
   .then(TagData => {
     if (!TagData) {
-      res.status(404).json({ message: `No tag with this id found.`});
+      res.status(404).json({ message: 'No Tag found with this id' });
       return;
     }
     res.json(TagData);
@@ -47,7 +45,7 @@ router.get('/:id', (req, res) => {
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
-  })
+  });
 });
 
 router.post('/', (req, res) => {
@@ -76,15 +74,15 @@ router.put('/:id', (req, res) => {
   )
   .then(TagData => {
     if (!TagData) {
-      res.status(404).json({ message: `No tag with this id found.`});
-      return;
+        res.status(404).json({ message: 'No Tag found with this id' });
+        return;
     }
     res.json(TagData);
   })
   .catch(err => {
     console.log(err);
     res.status(500).json(err);
-  })
+  });
 });
 
 router.delete('/:id', (req, res) => {
@@ -96,15 +94,14 @@ router.delete('/:id', (req, res) => {
   })
   .then(TagData => {
     if (!TagData) {
-      res.status(404).json({ message: `No tag with this id found`});
-      return;
+        res.status(404).json({ message: 'No Tag found with this id' });
+        return;
     }
     res.json(TagData);
-  })
-  .catch(err => {
+    })
+    .catch(err => {
     console.log(err);
     res.status(500).json(err);
-  })
+  });
 });
-
 module.exports = router;
