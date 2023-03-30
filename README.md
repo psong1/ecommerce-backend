@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a back-end application for an e-commerce site that manages 
+This is a back-end application that manages the products for an ecommerce site. This application allows user to see their inventory and update/delete specific products.
 
 ## Technologies
 
